@@ -33,3 +33,10 @@
         transform: scale(1.1);
         cursor: pointer;
     }
+
+    .header {
+        display: flex;
+        position: relative;
+        justify-content: center;
+        margin-top: 2%;
+    }

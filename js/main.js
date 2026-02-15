@@ -6,12 +6,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const html = await response.text();
         const container = document.querySelector('.container')
         container.innerHTML = html;
-        document.querySelector('mainBtn').addEventListener('click', ()=>{
-            loadPage('main')
-        })
-        document.querySelector('mainBtn').addEventListener('click', ()=>{
-            loadPage('contacts')
-        })
+        const mainBtn = document.querySelector('.mainBtn')
+        if (mainBtn) {
+            mainBtn.addEventListener('click', ()=>{
+                loadPage('main')
+            })
+        }
+        const contactsBtn = document.querySelector('.contactsBtn')
+        if (mainBtn) {
+            contactsBtn.addEventListener('click', ()=>{
+                loadPage('contacts')
+            })
+        }
     }
+
     loadPage('main');
 })
+
+async function initWeather() {
+    const weather = await fetch('https://api.open-meteo.com/v1/forecast?latitude=52.5244&longitude=13.4105&hourly=temperature_2m,precipitation_probability,wind_speed_10m,apparent_temperature')
+    const response = weather.JSON
+}
