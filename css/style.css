@@ -40,3 +40,21 @@
         justify-content: center;
         margin-top: 2%;
     }
+
+    .weather {
+        display: flex;
+        justify-content: center;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .weather-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap:20px;
+    }
+
+    .weatherCard {
+        display: flex;
+        flex-direction: column;
+    }
