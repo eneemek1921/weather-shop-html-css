@@ -44,8 +44,10 @@
     .weather {
         display: flex;
         justify-content: center;
-        margin-left: 5%;
-        margin-right: 5%;
+        margin-left: 30%;
+        margin-right:30%;
+        background-color: rgba(69, 77, 126, 0.438);
+        border-radius: 10px;
     }
 
     .weather-content {
