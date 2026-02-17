@@ -1,6 +1,8 @@
 console.log('js work')
 
 let dataWeather = []
+let contactData = JSON.parse(localStorage.getItem('contactData')) || []
+console.log('Сохранённые сообщения:', contactData)
 
 document.addEventListener('DOMContentLoaded', ()=>{
     async function loadPage(pageName) {
@@ -23,6 +25,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         if (pageName === 'main') {
             initWeather();
         }
+
+        if (pageName === 'contacts') {
+            modalWindowContact();
+        }
     }
 
     loadPage('main');
@@ -42,13 +48,13 @@ async function initWeather() {
             const hours = date.getHours()
             if (hours === 12) {
                 const formatedTime = date.toLocaleString('en-EN', {
-                    day: 'numeric',
-                    month: 'numeric',
+                    day: '2-digit',
+                    month: '2-digit',
                     hour: '2-digit',
                     minute: '2-digit'
                 })
                 const weekDay = date.toLocaleString('en-US', {
-                    weekday: 'short'
+                    weekday: 'long'
                 })
             
             const temp = dataWeather.hourly.temperature_2m[index]
@@ -59,11 +65,11 @@ async function initWeather() {
             weatherCard.className = 'weatherCard';
             weatherCard.innerHTML = `
                 <h1 class="weekDayWeatherCard">${weekDay}</h1>
-                <span>Time: ${formatedTime}</span>
-                <span>Temperature: ${temp}</span>
-                <span>Wind: ${wind}</span>
-                <span>Precip: ${precip}</span>
-                <span>feelsLike: ${feelsLike}</span>
+                <span>Time:  ${formatedTime}</span>
+                <span>🌡️ Temperature: ${temp} С°</span>
+                <span>💨 Wind: ${wind} KMH </span>
+                <span>☔ Precip: ${precip} MM</span>
+                <span>🤔 feelsLike: ${feelsLike} С°</span>
             `;
             container.appendChild(weatherCard)
             }
@@ -71,4 +77,39 @@ async function initWeather() {
     } catch (error) {
         console.log('error - initWeather', error)
     }
+}
+
+function modalWindowContact(){
+    const modalWindow = document.querySelector('.modalWindow')
+    const openButton = document.querySelector('.contactBtn')
+    const sendBtn = document.querySelector('.contactBtnSend')
+    const emailInput = document.querySelector('.emailInput')
+    const textInput = document.querySelector('.textInput')
+    const overlay = document.querySelector('.overlay')
+    const closeButton = document.querySelector('.modalCloseBtn')
+
+    openButton.addEventListener('click', () =>{
+        modalWindow.style.display = 'flex';
+        overlay.style.display = 'flex';
+    })
+    sendBtn.addEventListener('click', () =>{
+        const email = document.querySelector('.emailInput').value.trim();
+        const text = document.querySelector('.textInput').value.trim();
+        const h1 = document.querySelector('.contactH1')
+
+        if (email.trim() === '' || text.trim() === '') {
+            h1.innerHTML = 'Invalid';
+        } else {
+            h1.innerHTML = 'Contact';
+            emailInput.value = ''
+            textInput.value = ''
+            contactData.push({Email: email, Text: text})
+            localStorage.setItem('contactData', JSON.stringify(contactData))
+        }
+
+    })
+    closeButton.addEventListener('click', ()=>{
+        modalWindow.style.display = 'none';
+        overlay.style.display = 'none';
+    })
 }
